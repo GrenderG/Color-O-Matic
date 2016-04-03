@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/preview_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/color_view"
+            android:layout_width="@dimen/color_view_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            tools:background="@android:color/holo_blue_bright"/>
+
+        <TextView
+            android:id="@+id/tv_color_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10.0"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:visibility="invisible"
+            android:textAllCaps="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/channel_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/preview_container"
+        android:orientation="vertical"/>
+
+    <include
+        android:id="@+id/button_bar"
+        layout="@layout/button_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/preview_container"
+        android:layout_alignParentRight="true"/>
+</merge>
