@@ -24,10 +24,34 @@ dependencies {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'es.dmoral'
-    PUBLISH_ARTIFACT_ID = 'coloromatic'
-    PUBLISH_VERSION = '1.0.0'
+    bintrayRepo = 'maven'
+    bintrayName = 'Color-O-Matic'
+
+    publishedGroupId = 'es.dmoralh'
+    libraryName = 'Color-O-Matic'
+    artifact = 'coloromatic'
+
+    libraryDescription = 'Beautiful Color Picker dialog for Android 14+ based on Chroma by Priyesh Patel and VintageChroma by Pavel Sikun.'
+
+    siteUrl = 'https://github.com/GrenderG/Color-O-Matic'
+    gitUrl = 'https://github.com/GrenderG/Color-O-Matic.git'
+
+    libraryVersion = "1.0.0"
+
+    developerId = 'GrenderG'
+    developerName = 'Daniel Morales'
+    developerEmail = 'grenderg@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
-// ./gradlew clean build generateRelease
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply from: 'maven-install.gradle'
+apply from: 'bintray.gradle'
