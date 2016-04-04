@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import es.dmoral.coloromatic.ChromaUtil;
+import es.dmoral.coloromatic.ColorOMaticUtil;
 import es.dmoral.coloromatic.IndicatorMode;
 import es.dmoral.coloromatic.R;
 import es.dmoral.coloromatic.colormode.Channel;
@@ -86,7 +86,7 @@ public class ChannelView extends RelativeLayout {
 
     private void updateTextHexValue() {
         this.colorTextIndicator.setText(
-                ChromaUtil.getFormattedTextIndicator(indicatorMode, colorMode, colorValuesMap));
+                ColorOMaticUtil.getFormattedTextIndicator(indicatorMode, colorMode, colorValuesMap));
     }
 
     private String getHexValue(int progress) {

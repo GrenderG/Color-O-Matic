@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * Created by Daniel Morales on 04/04/2016.
  */
-public class ChromaUtil {
+public class ColorOMaticUtil {
 
     public static String getFormattedColorString(int color, boolean showAlpha) {
         if (showAlpha)

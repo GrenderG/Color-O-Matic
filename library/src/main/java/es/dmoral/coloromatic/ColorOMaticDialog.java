@@ -11,12 +11,12 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import es.dmoral.coloromatic.colormode.ColorMode;
-import es.dmoral.coloromatic.view.ChromaView;
+import es.dmoral.coloromatic.view.ColorOMaticView;
 
 /**
  * Created by Daniel Morales on 04/04/2016.
  */
-public class ChromaDialog extends DialogFragment {
+public class ColorOMaticDialog extends DialogFragment {
 
     private final static String ARG_INITIAL_COLOR = "arg_initial_color";
     private final static String ARG_COLOR_MODE_ID = "arg_color_mode_id";
@@ -24,10 +24,10 @@ public class ChromaDialog extends DialogFragment {
     private final static String ARG_SHOW_COLOR_INDICATOR = "arg_show_color_indicator";
 
     private OnColorSelectedListener listener;
-    private ChromaView chromaView;
+    private ColorOMaticView colorOMaticView;
 
-    private static ChromaDialog newInstance(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator) {
-        ChromaDialog fragment = new ChromaDialog();
+    private static ColorOMaticDialog newInstance(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator) {
+        ColorOMaticDialog fragment = new ColorOMaticDialog();
         fragment.setArguments(makeArgs(initialColor, colorMode, indicatorMode, showColorIndicator));
         return fragment;
     }
@@ -42,10 +42,10 @@ public class ChromaDialog extends DialogFragment {
     }
 
     public static class Builder {
-        private @ColorInt int initialColor = ChromaView.DEFAULT_COLOR;
-        private ColorMode colorMode = ChromaView.DEFAULT_MODE;
+        private @ColorInt int initialColor = ColorOMaticView.DEFAULT_COLOR;
+        private ColorMode colorMode = ColorOMaticView.DEFAULT_MODE;
         private IndicatorMode indicatorMode = IndicatorMode.DECIMAL;
-        private boolean showColorIndicator = ChromaView.DEFAULT_TEXT_INDICATOR_STATE;
+        private boolean showColorIndicator = ColorOMaticView.DEFAULT_TEXT_INDICATOR_STATE;
         private OnColorSelectedListener listener = null;
 
         public Builder initialColor(@ColorInt int initialColor) {
@@ -73,8 +73,8 @@ public class ChromaDialog extends DialogFragment {
             return this;
         }
 
-        public ChromaDialog create() {
-            ChromaDialog fragment = newInstance(initialColor, colorMode, indicatorMode, showColorIndicator);
+        public ColorOMaticDialog create() {
+            ColorOMaticDialog fragment = newInstance(initialColor, colorMode, indicatorMode, showColorIndicator);
             fragment.setListener(listener);
             return fragment;
         }
@@ -88,7 +88,7 @@ public class ChromaDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         if(savedInstanceState == null) {
-            chromaView = new ChromaView(
+            colorOMaticView = new ColorOMaticView(
                     getArguments().getInt(ARG_INITIAL_COLOR),
 
                     getArguments().getBoolean(ARG_SHOW_COLOR_INDICATOR),
@@ -103,9 +103,9 @@ public class ChromaDialog extends DialogFragment {
                     getActivity());
         }
         else {
-            chromaView = new ChromaView(
+            colorOMaticView = new ColorOMaticView(
 
-                    savedInstanceState.getInt(ARG_INITIAL_COLOR, ChromaView.DEFAULT_COLOR),
+                    savedInstanceState.getInt(ARG_INITIAL_COLOR, ColorOMaticView.DEFAULT_COLOR),
 
                     savedInstanceState.getBoolean(ARG_SHOW_COLOR_INDICATOR),
 
@@ -118,7 +118,7 @@ public class ChromaDialog extends DialogFragment {
                     getActivity());
         }
 
-        chromaView.enableButtonBar(new ChromaView.ButtonBarListener() {
+        colorOMaticView.enableButtonBar(new ColorOMaticView.ButtonBarListener() {
             @Override
             public void onPositiveButtonClick(int color) {
                 if(listener != null) listener.onColorSelected(color);
@@ -131,7 +131,7 @@ public class ChromaDialog extends DialogFragment {
             }
         });
 
-        final AlertDialog ad = new AlertDialog.Builder(getActivity(), getTheme()).setView(chromaView).create();
+        final AlertDialog ad = new AlertDialog.Builder(getActivity(), getTheme()).setView(colorOMaticView).create();
         ad.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
@@ -160,7 +160,7 @@ public class ChromaDialog extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putAll(makeArgs(chromaView.getCurrentColor(), chromaView.getColorMode(), chromaView.getIndicatorMode(), chromaView.isShowTextIndicator()));
+        outState.putAll(makeArgs(colorOMaticView.getCurrentColor(), colorOMaticView.getColorMode(), colorOMaticView.getIndicatorMode(), colorOMaticView.isShowTextIndicator()));
         super.onSaveInstanceState(outState);
     }
 

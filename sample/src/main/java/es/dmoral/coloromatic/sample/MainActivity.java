@@ -17,12 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import es.dmoral.coloromatic.ChromaDialog;
-import es.dmoral.coloromatic.ChromaUtil;
+import es.dmoral.coloromatic.ColorOMaticDialog;
+import es.dmoral.coloromatic.ColorOMaticUtil;
 import es.dmoral.coloromatic.OnColorSelectedListener;
 import es.dmoral.coloromatic.IndicatorMode;
 import es.dmoral.coloromatic.colormode.ColorMode;
-import es.dmoral.coloromatic.sample.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void updateTextView(int newColor) {
-        textView.setText(ChromaUtil.getFormattedColorString(newColor, mode == ColorMode.ARGB));
+        textView.setText(ColorOMaticUtil.getFormattedColorString(newColor, mode == ColorMode.ARGB));
         textView.setTextColor(newColor);
     }
 
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         IndicatorMode indicatorMode = IndicatorMode.HEX;
         if(mode == ColorMode.HSV) indicatorMode = IndicatorMode.DECIMAL; // cuz HEX is dumb for those
 
-        new ChromaDialog.Builder()
+        new ColorOMaticDialog.Builder()
             .initialColor(color)
             .colorMode(mode)
             .indicatorMode(indicatorMode) //HEX or DECIMAL;

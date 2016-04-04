@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by Daniel Morales on 04/04/2016.
  */
-public class ChromaView extends RelativeLayout {
+public class ColorOMaticView extends RelativeLayout {
 
     public final static int DEFAULT_COLOR = Color.GRAY;
     public final static ColorMode DEFAULT_MODE = ColorMode.RGB;
@@ -33,15 +33,15 @@ public class ChromaView extends RelativeLayout {
     private IndicatorMode indicatorMode;
     private boolean showTextIndicator;
 
-    public ChromaView(Context context) {
+    public ColorOMaticView(Context context) {
         this(DEFAULT_COLOR, DEFAULT_TEXT_INDICATOR_STATE, DEFAULT_MODE, DEFAULT_INDICATOR, context);
     }
 
-    public ChromaView(@ColorInt int initialColor, ColorMode colorMode, Context context) {
+    public ColorOMaticView(@ColorInt int initialColor, ColorMode colorMode, Context context) {
         this(initialColor, false, colorMode, DEFAULT_INDICATOR, context);
     }
 
-    public ChromaView(@ColorInt int initialColor, boolean showTextIndicator, ColorMode colorMode, IndicatorMode indicatorMode, Context context) {
+    public ColorOMaticView(@ColorInt int initialColor, boolean showTextIndicator, ColorMode colorMode, IndicatorMode indicatorMode, Context context) {
         super(context);
         this.indicatorMode = indicatorMode;
         this.colorMode = colorMode;
