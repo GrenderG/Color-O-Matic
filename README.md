@@ -11,7 +11,7 @@ Screenshots
 <img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc3.png" width="250">
 <img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc4.png" width="758">
 
-#### Repository
+# Repository
 
 Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
 
@@ -24,7 +24,7 @@ allprojects {
 }
 ```
 
-#### Dependency
+# Dependency
 
 Add this to your module's `build.gradle` file (make sure the version matches the JitPack badge above):
 
@@ -35,7 +35,7 @@ dependencies {
 }
 ```
 
-### Usage
+# Usage
 
 To display a color picker `DialogFragment`:
 
