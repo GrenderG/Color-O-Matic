@@ -44,14 +44,13 @@ To display a color picker `DialogFragment`:
 
 ``` java
   new ColorOMaticDialog.Builder()
-      .initialColor(this.selectedColor)
+      .initialColor(Color.WHITE)
       .colorMode(ColorMode.ARGB) // RGB, ARGB, HVS
       .indicatorMode(IndicatorMode.HEX) // HEX or DECIMAL; Note that using HSV with IndicatorMode.HEX is not recommended
       .onColorSelected(new OnColorSelectedListener() {
           @Override
           public void onColorSelected(@ColorInt int i) {
-              selectedColor = i;
-              mainLayout.setBackgroundColor(selectedColor);
+              // do your stuff
           }
       })
       .showColorIndicator(true) // Default false, choose to show text indicator showing the current color in HEX or DEC (see images) or not
