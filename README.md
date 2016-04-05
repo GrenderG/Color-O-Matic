@@ -3,15 +3,6 @@
 
 Beautiful Color Picker dialog for Android 14+ based on [Chroma by Priyesh Patel](https://github.com/ItsPriyesh/chroma) and [VintageChroma by Pavel Sikun](https://github.com/MrBIMC/VintageChroma).
 
-Screenshots
---
-
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr1.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr2.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr3.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr4.png" width="758">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr5.png" width="758">
-
 Repository
 --
 
@@ -60,3 +51,12 @@ To display a color picker `DialogFragment`:
 ```
 
 See [sample project](https://github.com/GrenderG/Color-O-Matic/tree/master/sample) for more info.
+
+Screenshots
+--
+
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr1.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr2.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr3.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr4.png" width="758">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr5.png" width="758">
