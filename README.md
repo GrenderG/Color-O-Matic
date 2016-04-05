@@ -1,5 +1,5 @@
 # Color-O-Matic
-[![](https://jitpack.io/v/GrenderG/Color-O-Matic.svg)](https://jitpack.io/#GrenderG/Color-O-Matic) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Color--O--Matic-green.svg?style=true)](https://android-arsenal.com/details/1/3391)
+[![](https://jitpack.io/v/GrenderG/Color-O-Matic.svg)](https://jitpack.io/#GrenderG/Color-O-Matic) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Color--O--Matic-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3391)
 
 Beautiful Color Picker dialog for Android 14+ based on [Chroma by Priyesh Patel](https://github.com/ItsPriyesh/chroma) and [VintageChroma by Pavel Sikun](https://github.com/MrBIMC/VintageChroma).
 **Screenshots at the end of the file.**
