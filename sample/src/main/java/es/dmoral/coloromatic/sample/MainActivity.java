@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             })
             .create()
-            .show(getFragmentManager(), "dialog");
+            .show(getSupportFragmentManager(), "dialog");
     }
 
     @Override

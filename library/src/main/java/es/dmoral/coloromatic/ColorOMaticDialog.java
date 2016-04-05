@@ -1,7 +1,8 @@
 package es.dmoral.coloromatic;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.os.Build;
+import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -132,30 +133,37 @@ public class ColorOMaticDialog extends DialogFragment {
         });
 
         final AlertDialog ad = new AlertDialog.Builder(getActivity(), getTheme()).setView(colorOMaticView).create();
-        ad.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                int multiplier = getResources().getConfiguration()
-                        .orientation == Configuration.ORIENTATION_LANDSCAPE
-                        ? 2
-                        : 1;
-
-
-                DisplayMetrics metrics = new DisplayMetrics();
-                getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-                int height = getResources().getConfiguration()
-                        .orientation == Configuration.ORIENTATION_LANDSCAPE
-                        ? (int) (metrics.heightPixels * 0.8)
-                        : WindowManager.LayoutParams.WRAP_CONTENT;
-
-                int width = getResources().getDimensionPixelSize(R.dimen.chroma_dialog_width) * multiplier;
-
-                ad.getWindow().setLayout(width, height);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            ad.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    measureLayout(ad);
+                }
+            });
+        } else {
+            measureLayout(ad);
+        }
 
         return ad;
+    }
+
+    void measureLayout(AlertDialog ad) {
+        int multiplier = getResources().getConfiguration()
+                .orientation == Configuration.ORIENTATION_LANDSCAPE
+                ? 2
+                : 1;
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = getResources().getConfiguration()
+                .orientation == Configuration.ORIENTATION_LANDSCAPE
+                ? (int) (metrics.heightPixels * 0.8)
+                : WindowManager.LayoutParams.WRAP_CONTENT;
+
+        int width = getResources().getDimensionPixelSize(R.dimen.chroma_dialog_width) * multiplier;
+
+        ad.getWindow().setLayout(width, height);
     }
 
     @Override
