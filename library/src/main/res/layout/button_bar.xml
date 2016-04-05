@@ -4,16 +4,18 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <Button
+    <TextView
         android:id="@+id/negative_button"
         style="?attr/buttonBarNegativeButtonStyle"
+        android:textColor="@color/default_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@android:string/cancel"/>
 
-    <Button
+    <TextView
         android:id="@+id/positive_button"
         style="?attr/buttonBarPositiveButtonStyle"
+        android:textColor="@color/default_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@android:string/ok"/>

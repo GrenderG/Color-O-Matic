@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import es.dmoral.coloromatic.ColorOMaticUtil;
 import es.dmoral.coloromatic.IndicatorMode;
 import es.dmoral.coloromatic.R;
 import es.dmoral.coloromatic.colormode.Channel;
@@ -63,18 +64,18 @@ public class ColorOMaticView extends RelativeLayout {
         List<Channel> channels = colorMode.getColorMode().getChannels();
         final List<ChannelView> channelViews = new ArrayList<>();
         for(Channel c : channels) {
-            channelViews.add(new ChannelView(c, currentColor, indicatorMode, colorTextIndicator, colorMode, getContext()));
+            channelViews.add(new ChannelView(c, currentColor, getContext()));
         }
+
+        updateText(colorView, colorTextIndicator, channelViews, channels);
 
         ChannelView.OnProgressChangedListener seekBarChangeListener = new ChannelView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged() {
                 List<Channel> channels = new ArrayList<>();
-                for(ChannelView chan : channelViews) {
+                for(ChannelView chan : channelViews)
                     channels.add(chan.getChannel());
-                }
-                currentColor = colorMode.getColorMode().evaluateColor(channels);
-                colorView.setBackgroundColor(currentColor);
+                updateText(colorView, colorTextIndicator, channelViews, channels);
             }
         };
 
@@ -89,6 +90,33 @@ public class ColorOMaticView extends RelativeLayout {
 
             c.registerListener(seekBarChangeListener);
         }
+    }
+
+    private void updateText(View colorView, TextView colorTextIndicator,
+                            List<ChannelView> channelViews, List<Channel> channels) {
+        currentColor = colorMode.getColorMode().evaluateColor(channels);
+        colorView.setBackgroundColor(currentColor);
+
+        if (indicatorMode == IndicatorMode.HEX)
+            colorTextIndicator.setText(ColorOMaticUtil.getFormattedColorString(currentColor, colorMode == ColorMode.ARGB));
+        else {
+            String decText = "";
+            for (ChannelView chan : channelViews)
+                decText += chan.getChannel().getProgress() + " ";
+            colorTextIndicator.setText(String.valueOf(decText.trim()));
+        }
+
+        if (!colorTextIndicator.getTag().equals("large-land"))
+            colorTextIndicator.setTextColor(getInverseColor(currentColor));
+    }
+
+    // Based on http://stackoverflow.com/a/5761067/4208583
+    private int getInverseColor(int color){
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        int alpha = Color.alpha(color);
+        return Color.argb(alpha, 255-red, 255-green, 255-blue);
     }
 
     public ColorMode getColorMode() {
@@ -114,8 +142,8 @@ public class ColorOMaticView extends RelativeLayout {
 
     public void enableButtonBar(final ButtonBarListener listener) {
         LinearLayout buttonBar = (LinearLayout) findViewById(R.id.button_bar);
-        Button positiveButton = (Button) buttonBar.findViewById(R.id.positive_button);
-        Button negativeButton = (Button) buttonBar.findViewById(R.id.negative_button);
+        TextView positiveButton = (TextView) buttonBar.findViewById(R.id.positive_button);
+        TextView negativeButton = (TextView) buttonBar.findViewById(R.id.negative_button);
 
         if(listener != null) {
             buttonBar.setVisibility(VISIBLE);

@@ -8,7 +8,8 @@
     <RelativeLayout
         android:id="@+id/preview_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false">
 
         <View
             android:id="@+id/color_view"
@@ -18,11 +19,9 @@
 
         <TextView
             android:id="@+id/tv_color_indicator"
+            android:tag="default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="10.0"
             android:textStyle="bold"
             android:textSize="24sp"
             android:visibility="invisible"

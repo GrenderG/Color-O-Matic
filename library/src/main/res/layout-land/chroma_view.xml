@@ -19,11 +19,9 @@
 
         <TextView
             android:id="@+id/tv_color_indicator"
+            android:tag="land"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="10.0"
             android:textStyle="bold"
             android:textSize="24sp"
             android:visibility="invisible"
@@ -36,7 +34,7 @@
         android:id="@+id/channel_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/channel_view_margin_top"
         android:layout_toRightOf="@id/preview_container"
         android:orientation="vertical"/>
 
@@ -45,6 +43,7 @@
         layout="@layout/button_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/channel_view_margin_top"
         android:layout_alignBottom="@id/preview_container"
         android:layout_alignParentRight="true"/>
 </merge>

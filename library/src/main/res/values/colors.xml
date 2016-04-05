@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_text_button_color">#009688</color>
+    <color name="mat_blue">#3F51B5</color>
+    <color name="mat_red">#F44336</color>
+    <color name="mat_green">#4CAF50</color>
+</resources>

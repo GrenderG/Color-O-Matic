@@ -1,7 +1,10 @@
 package es.dmoral.coloromatic.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.ColorInt;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -21,11 +24,7 @@ import java.util.HashMap;
 public class ChannelView extends RelativeLayout {
 
     private final Channel channel;
-    private final IndicatorMode indicatorMode;
-    private final TextView colorTextIndicator;
 
-    private static HashMap<String, String> colorValuesMap = new HashMap<>();
-    private final ColorMode colorMode;
     private Context context;
 
     private OnProgressChangedListener listener;
@@ -34,12 +33,9 @@ public class ChannelView extends RelativeLayout {
         void onProgressChanged();
     }
 
-    public ChannelView(Channel channel, @ColorInt int color, IndicatorMode indicatorMode, TextView colorTextIndicator, ColorMode colorMode, Context context) {
+    public ChannelView(Channel channel, @ColorInt int color, Context context) {
         super(context);
         this.channel = channel;
-        this.indicatorMode = indicatorMode;
-        this.colorTextIndicator = colorTextIndicator;
-        this.colorMode = colorMode;
         this.context = context;
 
         channel.setProgress(channel.getExtractor().extract(color));
@@ -57,11 +53,6 @@ public class ChannelView extends RelativeLayout {
         TextView label = (TextView) rootView.findViewById(R.id.label);
         label.setText(context.getString(channel.getNameResourceId()));
 
-        colorValuesMap.put(context.getString(this.channel.getNameResourceId()),
-                getHexValue(channel.getProgress()));
-
-        updateTextHexValue();
-
         SeekBar seekbar = (SeekBar) rootView.findViewById(R.id.seekbar);
         seekbar.setMax(channel.getMax());
         seekbar.setProgress(channel.getProgress());
@@ -70,9 +61,6 @@ public class ChannelView extends RelativeLayout {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 channel.setProgress(progress);
-                colorValuesMap.put(context.getString(channel.getNameResourceId()),
-                        getHexValue(channel.getProgress()));
-                updateTextHexValue();
                 if(listener != null) listener.onProgressChanged();
             }
 
@@ -82,17 +70,6 @@ public class ChannelView extends RelativeLayout {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { }
         });
-    }
-
-    private void updateTextHexValue() {
-        this.colorTextIndicator.setText(
-                ColorOMaticUtil.getFormattedTextIndicator(indicatorMode, colorMode, colorValuesMap));
-    }
-
-    private String getHexValue(int progress) {
-        return (indicatorMode == IndicatorMode.HEX
-                ? Integer.toHexString(progress)
-                : String.valueOf(progress));
     }
 
     public void registerListener(OnProgressChangedListener listener) {
