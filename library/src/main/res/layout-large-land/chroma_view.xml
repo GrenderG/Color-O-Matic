@@ -35,11 +35,13 @@
             android:textSize="32sp"
             android:layout_marginTop="@dimen/channel_view_margin_top"
             android:layout_marginBottom="@dimen/channel_view_margin_top"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:textAllCaps="true"
             android:layout_centerHorizontal="true"/>
 
         <View
+            android:id="@+id/large_land_divider"
+            android:visibility="gone"
             style="@style/Divider"
             android:layout_below="@id/tv_color_indicator" />
 

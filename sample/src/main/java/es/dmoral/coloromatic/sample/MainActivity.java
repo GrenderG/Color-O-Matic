@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,9 +35,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    private CheckBox cbShowTextIndicator;
+    private LinearLayout layoutShowTextIndicator;
 
     private int color;
     private ColorMode mode;
+    private boolean showTextIndicator = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,22 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text_view);
         spinner = (Spinner) findViewById(R.id.spinner);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        cbShowTextIndicator = (CheckBox) findViewById(R.id.cb_text_indicator);
+        layoutShowTextIndicator = (LinearLayout) findViewById(R.id.show_text_indicator_container);
+
+        cbShowTextIndicator.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                showTextIndicator = isChecked;
+            }
+        });
+
+        layoutShowTextIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cbShowTextIndicator.setChecked(!cbShowTextIndicator.isChecked());
+            }
+        });
 
         if(savedInstanceState == null) {
             color = ContextCompat.getColor(this, R.color.colorPrimary);
@@ -129,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             .initialColor(color)
             .colorMode(mode)
             .indicatorMode(indicatorMode) //HEX or DECIMAL;
-            .showColorIndicator(true)
+            .showColorIndicator(showTextIndicator)
             .onColorSelected(new OnColorSelectedListener() {
                 @Override public void onColorSelected(int newColor) {
                     updateTextView(newColor);

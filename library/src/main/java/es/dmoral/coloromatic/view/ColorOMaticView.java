@@ -58,8 +58,11 @@ public class ColorOMaticView extends RelativeLayout {
         final View colorView = findViewById(R.id.color_view);
         colorView.setBackgroundColor(currentColor);
         final TextView colorTextIndicator = (TextView) findViewById(R.id.tv_color_indicator);
-        if (this.showTextIndicator)
+        if (this.showTextIndicator) {
             colorTextIndicator.setVisibility(View.VISIBLE);
+            if (colorTextIndicator.getTag().equals("large-land"))
+                findViewById(R.id.large_land_divider).setVisibility(View.VISIBLE);
+        }
 
         List<Channel> channels = colorMode.getColorMode().getChannels();
         final List<ChannelView> channelViews = new ArrayList<>();
@@ -112,11 +115,8 @@ public class ColorOMaticView extends RelativeLayout {
 
     // Based on http://stackoverflow.com/a/5761067/4208583
     private int getInverseColor(int color){
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        int alpha = Color.alpha(color);
-        return Color.argb(alpha, 255-red, 255-green, 255-blue);
+        return Color.argb(Color.alpha(color), 255 - Color.red(color), 255 -
+                Color.green(color), 255 - Color.blue(color));
     }
 
     public ColorMode getColorMode() {

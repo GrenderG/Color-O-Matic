@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dmoral.coloromatic.sample.MainActivity">
+    tools:context="es.dmoral.coloromatic.sample.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,23 +29,45 @@
         android:paddingRight="16dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_view"
             android:textColor="@android:color/black"
-            android:fontFamily="sans-serif-medium"
             android:textSize="32sp"
             android:textAllCaps="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"/>
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/show_text_indicator_container"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb_text_indicator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_text_indicator"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
