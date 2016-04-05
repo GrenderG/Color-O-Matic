@@ -6,10 +6,11 @@ Beautiful Color Picker dialog for Android 14+ based on [Chroma by Priyesh Patel]
 Screenshots
 --
 
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc1.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc2.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc3.png" width="250">
-<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/sc4.png" width="758">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr1.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr2.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr3.png" width="250">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr4.png" width="758">
+<img src="https://raw.githubusercontent.com/GrenderG/Color-O-Matic/master/art/scr5.png" width="758">
 
 Repository
 --
@@ -33,7 +34,7 @@ Add this to your module's `build.gradle` file (make sure the version matches the
 ```gradle
 dependencies {
 	...
-	compile 'com.github.GrenderG:Color-O-Matic:1.0.2'
+	compile 'com.github.GrenderG:Color-O-Matic:1.1.1'
 }
 ```
 
