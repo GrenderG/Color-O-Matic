@@ -48,7 +48,7 @@ To display a color picker `DialogFragment`:
       })
       .showColorIndicator(true) // Default false, choose to show text indicator showing the current color in HEX or DEC (see images) or not
       .create()
-      .show(getFragmentManager(), "ColorOMaticDialog");
+      .show(getSupportFragmentManager(), "ColorOMaticDialog");
 ```
 
 See [sample project](https://github.com/GrenderG/Color-O-Matic/tree/master/sample) for more info.
