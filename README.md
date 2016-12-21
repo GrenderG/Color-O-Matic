@@ -1,7 +1,7 @@
 # Color-O-Matic
 [![](https://jitpack.io/v/GrenderG/Color-O-Matic.svg)](https://jitpack.io/#GrenderG/Color-O-Matic) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Color--O--Matic-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3391)
 
-Beautiful Color Picker dialog for Android 14+ based on [Chroma by Priyesh Patel](https://github.com/ItsPriyesh/chroma) and [VintageChroma by Pavel Sikun](https://github.com/MrBIMC/VintageChroma).
+Beautiful Color Picker dialog for Android 9+ based on [VintageChroma by Pavel Sikun](https://github.com/MrBIMC/VintageChroma).
 **Screenshots at the end of the file.**
 
 Repository
@@ -26,7 +26,7 @@ Add this to your module's `build.gradle` file (make sure the version matches the
 ```gradle
 dependencies {
 	...
-	compile 'com.github.GrenderG:Color-O-Matic:1.1.3'
+	compile 'com.github.GrenderG:Color-O-Matic:1.1.4'
 }
 ```
 

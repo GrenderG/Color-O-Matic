@@ -7,16 +7,16 @@
     <TextView
         android:id="@+id/negative_button"
         style="?attr/buttonBarNegativeButtonStyle"
-        android:textColor="@color/default_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@android:string/cancel"/>
+        android:text="@android:string/cancel"
+        android:textColor="@color/default_text_button_color" />
 
     <TextView
         android:id="@+id/positive_button"
         style="?attr/buttonBarPositiveButtonStyle"
-        android:textColor="@color/default_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@android:string/ok"/>
+        android:text="@android:string/ok"
+        android:textColor="@color/default_text_button_color" />
 </LinearLayout>
