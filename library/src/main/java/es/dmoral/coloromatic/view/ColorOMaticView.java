@@ -94,7 +94,7 @@ public class ColorOMaticView extends RelativeLayout {
         if (showTextIndicator)
             colorTextIndicator.setVisibility(View.VISIBLE);
         final EditText editTextIndicator = (EditText) findViewById(R.id.ed_color_edit);
-        if (isTextIndicatorEditable && indicatorMode == IndicatorMode.HEX) {
+        if (showTextIndicator && isTextIndicatorEditable && indicatorMode == IndicatorMode.HEX) {
             colorTextIndicator.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
