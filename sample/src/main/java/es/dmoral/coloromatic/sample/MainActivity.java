@@ -4,10 +4,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import es.dmoral.coloromatic.ColorOMaticDialog;
 import es.dmoral.coloromatic.ColorOMaticUtil;
-import es.dmoral.coloromatic.OnColorSelectedListener;
 import es.dmoral.coloromatic.IndicatorMode;
+import es.dmoral.coloromatic.OnColorSelectedListener;
 import es.dmoral.coloromatic.colormode.ColorMode;
 
 public class MainActivity extends AppCompatActivity {
@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             .colorMode(mode)
             .indicatorMode(indicatorMode) //HEX or DECIMAL;
             .showColorIndicator(showTextIndicator)
+                .isColorIndicatorEditable(true)
             .onColorSelected(new OnColorSelectedListener() {
                 @Override public void onColorSelected(int newColor) {
                     updateTextView(newColor);

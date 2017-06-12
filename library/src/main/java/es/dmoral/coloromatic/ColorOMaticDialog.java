@@ -41,22 +41,24 @@ public class ColorOMaticDialog extends DialogFragment {
     private final static String ARG_COLOR_MODE_ID = "arg_color_mode_id";
     private final static String ARG_INDICATOR_MODE = "arg_indicator_mode";
     private final static String ARG_SHOW_COLOR_INDICATOR = "arg_show_color_indicator";
+    private final static String ARG_COLOR_INDICATOR_EDITABLE = "arg_color_indicator_editable";
 
     private OnColorSelectedListener listener;
     private ColorOMaticView colorOMaticView;
 
-    private static ColorOMaticDialog newInstance(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator) {
+    private static ColorOMaticDialog newInstance(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator, boolean isColorIndicatorEditable) {
         ColorOMaticDialog fragment = new ColorOMaticDialog();
-        fragment.setArguments(makeArgs(initialColor, colorMode, indicatorMode, showColorIndicator));
+        fragment.setArguments(makeArgs(initialColor, colorMode, indicatorMode, showColorIndicator, isColorIndicatorEditable));
         return fragment;
     }
 
-    private static Bundle makeArgs(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator) {
+    private static Bundle makeArgs(@ColorInt int initialColor, ColorMode colorMode, IndicatorMode indicatorMode, boolean showColorIndicator, boolean isColorIndicatorEditable) {
         Bundle args = new Bundle();
         args.putInt(ARG_INITIAL_COLOR, initialColor);
         args.putInt(ARG_COLOR_MODE_ID, colorMode.ordinal());
         args.putInt(ARG_INDICATOR_MODE, indicatorMode.ordinal());
         args.putBoolean(ARG_SHOW_COLOR_INDICATOR, showColorIndicator);
+        args.putBoolean(ARG_COLOR_INDICATOR_EDITABLE, isColorIndicatorEditable);
         return args;
     }
 
@@ -72,6 +74,7 @@ public class ColorOMaticDialog extends DialogFragment {
             colorOMaticView = new ColorOMaticView(
                     getArguments().getInt(ARG_INITIAL_COLOR),
                     getArguments().getBoolean(ARG_SHOW_COLOR_INDICATOR),
+                    getArguments().getBoolean(ARG_COLOR_INDICATOR_EDITABLE),
                     ColorMode.values()[
                             getArguments().getInt(ARG_COLOR_MODE_ID)],
                     IndicatorMode.values()[
@@ -81,6 +84,7 @@ public class ColorOMaticDialog extends DialogFragment {
             colorOMaticView = new ColorOMaticView(
                     savedInstanceState.getInt(ARG_INITIAL_COLOR, ColorOMaticView.DEFAULT_COLOR),
                     savedInstanceState.getBoolean(ARG_SHOW_COLOR_INDICATOR),
+                    getArguments().getBoolean(ARG_COLOR_INDICATOR_EDITABLE),
                     ColorMode.values()[
                             savedInstanceState.getInt(ARG_COLOR_MODE_ID)],
                     IndicatorMode.values()[
@@ -137,7 +141,7 @@ public class ColorOMaticDialog extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putAll(makeArgs(colorOMaticView.getCurrentColor(), colorOMaticView.getColorMode(), colorOMaticView.getIndicatorMode(), colorOMaticView.isShowTextIndicator()));
+        outState.putAll(makeArgs(colorOMaticView.getCurrentColor(), colorOMaticView.getColorMode(), colorOMaticView.getIndicatorMode(), colorOMaticView.isShowTextIndicator(), colorOMaticView.isTextIndicatorEditable()));
         super.onSaveInstanceState(outState);
     }
 
@@ -154,6 +158,7 @@ public class ColorOMaticDialog extends DialogFragment {
         private ColorMode colorMode = ColorOMaticView.DEFAULT_MODE;
         private IndicatorMode indicatorMode = IndicatorMode.DECIMAL;
         private boolean showColorIndicator = ColorOMaticView.DEFAULT_TEXT_INDICATOR_STATE;
+        private boolean isColorIndicatorEditable = ColorOMaticView.DEFAULT_TEXT_INDICATOR_EDITABLE;
         private OnColorSelectedListener listener = null;
 
         public Builder initialColor(@ColorInt int initialColor) {
@@ -171,6 +176,11 @@ public class ColorOMaticDialog extends DialogFragment {
             return this;
         }
 
+        public Builder isColorIndicatorEditable(boolean isColorIndicatorEditable) {
+            this.isColorIndicatorEditable = isColorIndicatorEditable;
+            return this;
+        }
+
         public Builder indicatorMode(IndicatorMode indicatorMode) {
             this.indicatorMode = indicatorMode;
             return this;
@@ -182,7 +192,7 @@ public class ColorOMaticDialog extends DialogFragment {
         }
 
         public ColorOMaticDialog create() {
-            ColorOMaticDialog fragment = newInstance(initialColor, colorMode, indicatorMode, showColorIndicator);
+            ColorOMaticDialog fragment = newInstance(initialColor, colorMode, indicatorMode, showColorIndicator, isColorIndicatorEditable);
             fragment.setListener(listener);
             return fragment;
         }

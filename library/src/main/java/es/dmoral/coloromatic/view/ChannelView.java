@@ -40,6 +40,8 @@ public class ChannelView extends RelativeLayout {
 
     private OnProgressChangedListener listener;
 
+    private SeekBar seekbar;
+
     public ChannelView(Channel channel, @ColorInt int color, Context context) {
         super(context);
         this.channel = channel;
@@ -60,7 +62,7 @@ public class ChannelView extends RelativeLayout {
         TextView label = (TextView) rootView.findViewById(R.id.label);
         label.setText(context.getString(channel.getNameResourceId()));
 
-        SeekBar seekbar = (SeekBar) rootView.findViewById(R.id.seekbar);
+        seekbar = (SeekBar) rootView.findViewById(R.id.seekbar);
         seekbar.setMax(channel.getMax());
         seekbar.setProgress(channel.getProgress());
 
@@ -68,7 +70,7 @@ public class ChannelView extends RelativeLayout {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 channel.setProgress(progress);
-                if (listener != null) listener.onProgressChanged();
+                if (listener != null) listener.onProgressChanged(true);
             }
 
             @Override
@@ -85,6 +87,12 @@ public class ChannelView extends RelativeLayout {
         this.listener = listener;
     }
 
+    public void setProgress(int progress) {
+        seekbar.setProgress(progress);
+        channel.setProgress(progress);
+        if (listener != null) listener.onProgressChanged(false);
+    }
+
     public Channel getChannel() {
         return channel;
     }
@@ -96,6 +104,6 @@ public class ChannelView extends RelativeLayout {
     }
 
     public interface OnProgressChangedListener {
-        void onProgressChanged();
+        void onProgressChanged(boolean fromSeek);
     }
 }
