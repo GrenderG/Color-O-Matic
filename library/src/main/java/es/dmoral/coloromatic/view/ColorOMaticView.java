@@ -8,7 +8,6 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -137,10 +136,8 @@ public class ColorOMaticView extends RelativeLayout {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int current = isHexCodeValid(s.toString());
-                    Log.e("HexCode", "Resolved: " + current);
                     if (!lastColor.equals(s.toString()) && current != -1 && (colorMode == ColorMode.HSV ? (s.length() >= 5) : s.length() >= getTextLength())) {
                         lastColor = s.toString();
-                        Log.e("HexCode", "Changing Progress: " + lastColor);
                         switch (colorMode) {
                             case ARGB:
                                 for (ChannelView channelView : channelViews) {
@@ -183,15 +180,12 @@ public class ColorOMaticView extends RelativeLayout {
                                     String[] progress = s.toString().split(" ");
                                     switch (getResources().getString(channel.getNameResourceId())) {
                                         case "H":
-                                            Log.e("HexCode", "H " + progress[0]);
                                             channelView.setProgress(Integer.parseInt(progress[0]));
                                             break;
                                         case "S":
-                                            Log.e("HexCode", "S " + progress[1]);
                                             channelView.setProgress(Integer.parseInt(progress[1]));
                                             break;
                                         case "V":
-                                            Log.e("HexCode", "V " + progress[2]);
                                             channelView.setProgress(Integer.parseInt(progress[2]));
                                             break;
                                     }
@@ -261,7 +255,6 @@ public class ColorOMaticView extends RelativeLayout {
             }
         } else {
             try {
-                Log.e("HexCode", hex);
                 if (hex.contains(" ")) {
                     String[] array = hex.trim().split(" ");
                     if (array.length == 3) {
