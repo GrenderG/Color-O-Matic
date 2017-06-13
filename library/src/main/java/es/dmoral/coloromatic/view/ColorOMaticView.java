@@ -5,9 +5,13 @@ import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,7 +25,6 @@ import es.dmoral.coloromatic.IndicatorMode;
 import es.dmoral.coloromatic.R;
 import es.dmoral.coloromatic.colormode.Channel;
 import es.dmoral.coloromatic.colormode.ColorMode;
-import es.dmoral.coloromatic.colormode.mode.HSV;
 
 /**
  * Color-O-Matic
@@ -59,13 +62,16 @@ public class ColorOMaticView extends RelativeLayout {
     private boolean showTextIndicator;
     private boolean isTextIndicatorEditable;
     private String lastColor = "";
+    private Context context;
 
     public ColorOMaticView(Context context) {
         this(DEFAULT_COLOR, DEFAULT_TEXT_INDICATOR_STATE, DEFAULT_TEXT_INDICATOR_EDITABLE, DEFAULT_MODE, DEFAULT_INDICATOR, context);
+        this.context = context;
     }
 
     public ColorOMaticView(@ColorInt int initialColor, ColorMode colorMode, Context context) {
         this(initialColor, false, false, colorMode, DEFAULT_INDICATOR, context);
+        this.context = context;
     }
 
     public ColorOMaticView(@ColorInt int initialColor, boolean showTextIndicator, boolean isTextIndicatorEditable, ColorMode colorMode, IndicatorMode indicatorMode, Context context) {
@@ -75,6 +81,7 @@ public class ColorOMaticView extends RelativeLayout {
         this.currentColor = initialColor;
         this.showTextIndicator = showTextIndicator;
         this.isTextIndicatorEditable = isTextIndicatorEditable;
+        this.context = context;
         init();
     }
 
@@ -94,7 +101,9 @@ public class ColorOMaticView extends RelativeLayout {
         if (showTextIndicator)
             colorTextIndicator.setVisibility(View.VISIBLE);
         final EditText editTextIndicator = (EditText) findViewById(R.id.ed_color_edit);
-        if (showTextIndicator && isTextIndicatorEditable && indicatorMode == IndicatorMode.HEX) {
+        if (showTextIndicator && isTextIndicatorEditable) {
+            if (indicatorMode == IndicatorMode.DECIMAL)
+                editTextIndicator.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             colorTextIndicator.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,10 +120,14 @@ public class ColorOMaticView extends RelativeLayout {
                             editTextIndicator.setText(colorTextIndicator.getText());
                         editTextIndicator.setVisibility(GONE);
                         colorTextIndicator.setVisibility(VISIBLE);
+                        editTextIndicator.setSelection(editTextIndicator.getText().length());
+                    } else {
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(editTextIndicator, InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
             });
-            editTextIndicator.setFilters(new InputFilter[]{new InputFilter.LengthFilter(colorMode == ColorMode.ARGB ? 9 : (colorMode == ColorMode.RGB ? 7 : 11)), new InputFilter.AllCaps()});
+            editTextIndicator.setFilters(new InputFilter[]{new InputFilter.LengthFilter(getTextLength()), new InputFilter.AllCaps()});
             editTextIndicator.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -124,8 +137,10 @@ public class ColorOMaticView extends RelativeLayout {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int current = isHexCodeValid(s.toString());
-                    if (!lastColor.equals(s.toString()) && current != -1) {
+                    Log.e("HexCode", "Resolved: " + current);
+                    if (!lastColor.equals(s.toString()) && current != -1 && (colorMode == ColorMode.HSV ? (s.length() >= 5) : s.length() >= getTextLength())) {
                         lastColor = s.toString();
+                        Log.e("HexCode", "Changing Progress: " + lastColor);
                         switch (colorMode) {
                             case ARGB:
                                 for (ChannelView channelView : channelViews) {
@@ -165,15 +180,19 @@ public class ColorOMaticView extends RelativeLayout {
                             case HSV:
                                 for (ChannelView channelView : channelViews) {
                                     Channel channel = channelView.getChannel();
+                                    String[] progress = s.toString().split(" ");
                                     switch (getResources().getString(channel.getNameResourceId())) {
                                         case "H":
-                                            channelView.setProgress((int) HSV.colorToHSV(current)[0]);
+                                            Log.e("HexCode", "H " + progress[0]);
+                                            channelView.setProgress(Integer.parseInt(progress[0]));
                                             break;
                                         case "S":
-                                            channelView.setProgress((int) (HSV.colorToHSV(current)[1] * 100));
+                                            Log.e("HexCode", "S " + progress[1]);
+                                            channelView.setProgress(Integer.parseInt(progress[1]));
                                             break;
                                         case "V":
-                                            channelView.setProgress((int) (HSV.colorToHSV(current)[2] * 100));
+                                            Log.e("HexCode", "V " + progress[2]);
+                                            channelView.setProgress(Integer.parseInt(progress[2]));
                                             break;
                                     }
                                 }
@@ -220,11 +239,53 @@ public class ColorOMaticView extends RelativeLayout {
         }
     }
 
+    private int getTextLength() {
+        switch (colorMode) {
+            case ARGB:
+                return 9;
+            case RGB:
+                return 7;
+            default:
+            case HSV:
+                return 11;
+
+        }
+    }
+
     private int isHexCodeValid(String hex) {
-        try {
-            return Color.parseColor(hex);
-        } catch (IllegalArgumentException e) {
-            return -1;
+        if (indicatorMode == IndicatorMode.HEX) {
+            try {
+                return Color.parseColor(hex);
+            } catch (IllegalArgumentException e) {
+                return -1;
+            }
+        } else {
+            try {
+                Log.e("HexCode", hex);
+                if (hex.contains(" ")) {
+                    String[] array = hex.trim().split(" ");
+                    if (array.length == 3) {
+                        for (String num : array) {
+                            if (!TextUtils.isDigitsOnly(num))
+                                return -1;
+                        }
+                        if (Integer.parseInt(array[0]) <= 360 &&
+                                Integer.parseInt(array[1]) <= 100 &&
+                                Integer.parseInt(array[2]) <= 100) {
+                            return -2;
+                        } else {
+                            return -1;
+                        }
+                    } else {
+                        return -1;
+                    }
+                } else {
+                    return -1;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
         }
     }
 
@@ -236,8 +297,7 @@ public class ColorOMaticView extends RelativeLayout {
         if (indicatorMode == IndicatorMode.HEX) {
             colorTextIndicator.setText(ColorOMaticUtil.getFormattedColorString(currentColor, colorMode == ColorMode.ARGB));
             colorTextEdit.setText(ColorOMaticUtil.getFormattedColorString(currentColor, colorMode == ColorMode.ARGB));
-        }
-        else {
+        } else {
             String decText = "";
             for (ChannelView chan : channelViews)
                 decText += chan.getChannel().getProgress() + " ";
@@ -249,6 +309,7 @@ public class ColorOMaticView extends RelativeLayout {
             colorTextIndicator.setTextColor(getInverseColor(currentColor));
             colorTextEdit.setTextColor(getInverseColor(currentColor));
         }
+        colorTextEdit.setSelection(colorTextEdit.getText().length());
     }
 
     private void updateText(View colorView, TextView colorTextIndicator,
