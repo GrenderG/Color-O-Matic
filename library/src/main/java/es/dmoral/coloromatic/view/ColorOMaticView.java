@@ -135,6 +135,11 @@ public class ColorOMaticView extends RelativeLayout {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (!s.toString().contains("#")) {
+                        String code = "#" + s;
+                        editTextIndicator.setText(code);
+                        editTextIndicator.setSelection(1);
+                    }
                     int current = isHexCodeValid(s.toString());
                     if (!lastColor.equals(s.toString()) && current != -1 && (colorMode == ColorMode.HSV ? (s.length() >= 5) : s.length() >= getTextLength())) {
                         lastColor = s.toString();
@@ -249,7 +254,11 @@ public class ColorOMaticView extends RelativeLayout {
     private int isHexCodeValid(String hex) {
         if (indicatorMode == IndicatorMode.HEX) {
             try {
-                return Color.parseColor(hex);
+                if (hex.contains("#")) {
+                    return Color.parseColor(hex);
+                } else {
+                    return -1;
+                }
             } catch (IllegalArgumentException e) {
                 return -1;
             }
