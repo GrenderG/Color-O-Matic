@@ -1,3 +1,5 @@
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R21LO82)
+
 # Color-O-Matic
 [![](https://jitpack.io/v/GrenderG/Color-O-Matic.svg)](https://jitpack.io/#GrenderG/Color-O-Matic) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Color--O--Matic-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3391)
 
