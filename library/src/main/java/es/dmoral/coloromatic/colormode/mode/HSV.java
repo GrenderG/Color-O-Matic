@@ -30,7 +30,7 @@ import es.dmoral.coloromatic.colormode.Channel;
 
 public class HSV implements AbstractColorMode {
 
-    float[] colorToHSV(int color) {
+    public static float[] colorToHSV(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         return hsv;

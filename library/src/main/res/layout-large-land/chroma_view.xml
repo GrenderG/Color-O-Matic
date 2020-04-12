@@ -31,9 +31,22 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/channel_view_margin_top"
             android:layout_marginTop="@dimen/channel_view_margin_top"
+            android:clickable="true"
             android:textAllCaps="true"
             android:textColor="?colorAccent"
             android:textSize="32sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/ed_color_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:textAllCaps="true"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="gone" />
 

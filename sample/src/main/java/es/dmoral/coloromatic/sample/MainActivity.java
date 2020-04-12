@@ -4,10 +4,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import es.dmoral.coloromatic.ColorOMaticDialog;
 import es.dmoral.coloromatic.ColorOMaticUtil;
-import es.dmoral.coloromatic.OnColorSelectedListener;
 import es.dmoral.coloromatic.IndicatorMode;
+import es.dmoral.coloromatic.OnColorSelectedListener;
 import es.dmoral.coloromatic.colormode.ColorMode;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private CheckBox cbShowTextIndicator;
+    private CheckBox cbSetTextIndicatorEditable;
     private LinearLayout layoutShowTextIndicator;
+    private LinearLayout layoutSetTextIndicatorEditable;
 
     private int color;
     private ColorMode mode;
     private boolean showTextIndicator = false;
+    private boolean isTextIndicatorEditable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +55,25 @@ public class MainActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         cbShowTextIndicator = (CheckBox) findViewById(R.id.cb_text_indicator);
+        cbSetTextIndicatorEditable = (CheckBox) findViewById(R.id.cb_text_indicator_editable);
         layoutShowTextIndicator = (LinearLayout) findViewById(R.id.show_text_indicator_container);
+        layoutSetTextIndicatorEditable = (LinearLayout) findViewById(R.id.show_text_indicator_editable);
 
         cbShowTextIndicator.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showTextIndicator = isChecked;
+                if (!isChecked)
+                    cbSetTextIndicatorEditable.setChecked(false);
+            }
+        });
+
+        cbSetTextIndicatorEditable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isTextIndicatorEditable = isChecked;
+                if (isChecked && !cbShowTextIndicator.isChecked())
+                    cbShowTextIndicator.setChecked(true);
             }
         });
 
@@ -67,13 +83,19 @@ public class MainActivity extends AppCompatActivity {
                 cbShowTextIndicator.setChecked(!cbShowTextIndicator.isChecked());
             }
         });
+        layoutSetTextIndicatorEditable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cbSetTextIndicatorEditable.setChecked(!cbSetTextIndicatorEditable.isChecked());
+            }
+        });
 
-        if(savedInstanceState == null) {
+
+        if (savedInstanceState == null) {
             color = ContextCompat.getColor(this, R.color.colorPrimary);
             mode = ColorMode.RGB;
 
-        }
-        else {
+        } else {
             color = savedInstanceState.getInt(EXTRA_COLOR);
             mode = ColorMode.values()[savedInstanceState.getInt(EXTRA_MODE)];
         }
@@ -99,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     void setupSpinner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        for(ColorMode m : ColorMode.values()) {
+        for (ColorMode m : ColorMode.values()) {
             adapter.add(m.name());
         }
         adapter.notifyDataSetChanged();
@@ -113,7 +135,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -127,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 new ColorDrawable(oldColor), new ColorDrawable(newColor)
         });
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             toolbar.setBackground(transition);
         } else {
             toolbar.setBackgroundDrawable(transition);
@@ -145,25 +168,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void showColorPickerDialog() {
         IndicatorMode indicatorMode = IndicatorMode.HEX;
-        if(mode == ColorMode.HSV) indicatorMode = IndicatorMode.DECIMAL; // cuz HEX is dumb for those
+        if (mode == ColorMode.HSV)
+            indicatorMode = IndicatorMode.DECIMAL; // cuz HEX is dumb for those
 
         new ColorOMaticDialog.Builder()
-            .initialColor(color)
-            .colorMode(mode)
-            .indicatorMode(indicatorMode) //HEX or DECIMAL;
-            .showColorIndicator(showTextIndicator)
-            .onColorSelected(new OnColorSelectedListener() {
-                @Override public void onColorSelected(int newColor) {
-                    updateTextView(newColor);
-                    updateToolbar(color, newColor);
-                    color = newColor;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(darkenColor(newColor));
+                .initialColor(color)
+                .colorMode(mode)
+                .indicatorMode(indicatorMode) //HEX or DECIMAL;
+                .showColorIndicator(showTextIndicator)
+                .isColorIndicatorEditable(isTextIndicatorEditable)
+                .onColorSelected(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int newColor) {
+                        updateTextView(newColor);
+                        updateToolbar(color, newColor);
+                        color = newColor;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            getWindow().setStatusBarColor(darkenColor(newColor));
+                        }
                     }
-                }
-            })
-            .create()
-            .show(getSupportFragmentManager(), "dialog");
+                })
+                .create()
+                .show(getSupportFragmentManager(), "dialog");
     }
 
     @Override

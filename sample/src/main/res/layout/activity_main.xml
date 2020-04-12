@@ -25,21 +25,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/text_view"
-            android:textColor="@android:color/black"
-            android:textSize="32sp"
-            android:textAllCaps="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="32sp" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -49,23 +49,46 @@
 
         <LinearLayout
             android:id="@+id/show_text_indicator_container"
-            android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/cb_text_indicator"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <TextView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/show_text_indicator"
+                android:layout_weight="1"
+                android:text="@string/show_text_indicator" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/show_text_indicator_editable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb_text_indicator_editable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/show_text_indicator_editable" />
 
         </LinearLayout>
 
@@ -78,8 +101,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="32dp"
         android:layout_marginRight="24dp"
-        app:srcCompat="@drawable/palette"
+        app:backgroundTint="@color/colorAccent"
         app:elevation="6dp"
-        app:backgroundTint="@color/colorAccent"/>
+        app:srcCompat="@drawable/palette" />
 
 </android.support.design.widget.CoordinatorLayout>

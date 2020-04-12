@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Color-O-Matic</string>
     <string name="show_text_indicator">Show text indicator.</string>
+    <string name="show_text_indicator_editable">Set text indicator as editable.</string>
 </resources>
